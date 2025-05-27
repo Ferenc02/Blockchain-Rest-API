@@ -1,0 +1,12 @@
+import fs from "fs/promises";
+import { logError } from "../services/logger.js";
+
+const dbFilePath = "./src/database/blockchain.json";
+
+export async function saveBlockchain(data) {
+  try {
+    await fs.writeFile(dbFilePath, JSON.stringify(data, null, 2));
+  } catch (error) {
+    logError(error);
+  }
+}
