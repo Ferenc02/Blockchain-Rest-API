@@ -10,3 +10,13 @@ export async function saveBlockchain(data) {
     logError(error);
   }
 }
+
+export async function loadBlockchain() {
+  try {
+    const data = await fs.readFile(dbFilePath, "utf-8");
+    return JSON.parse(data);
+  } catch (error) {
+    logError(error);
+    return { blocks: [] }; // Return an empty blockchain if loading fails
+  }
+}
