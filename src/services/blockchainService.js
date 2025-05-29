@@ -13,7 +13,9 @@ export async function initialize() {
   if (data) {
     blockchain.loadFromData(data);
   } else {
-    console.log("No existing blockchain data found, creating genesis block.");
+    console.log(
+      "🚀 No existing blockchain data found, creating genesis block.🚀 \n"
+    );
     blockchain.createGenesisBlock();
     await saveBlockchain(blockchain.chain);
   }

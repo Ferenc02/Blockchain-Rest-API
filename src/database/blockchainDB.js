@@ -14,6 +14,9 @@ export async function saveBlockchain(data) {
 export async function loadBlockchain() {
   try {
     const data = await fs.readFile(dbFilePath, "utf-8");
+    if (!data) {
+      return null;
+    }
     return JSON.parse(data);
   } catch (error) {
     logError(error);
