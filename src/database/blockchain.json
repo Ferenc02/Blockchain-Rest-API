@@ -1,12 +1,12 @@
 [
   {
     "index": 0,
-    "timestamp": "2025-05-29T14:38:23.226Z",
+    "timestamp": "2025-05-29T14:49:06.350Z",
     "data": {
-      "message": "Genesis Block"
+      "data": "Genesis Block"
     },
     "previousHash": "0",
-    "nonce": 125,
-    "hash": "0070bd2e6a05514645b26c98ea51fb1bdc6bb923faef79106d2d9e1a0422fd19"
+    "nonce": 969,
+    "hash": "00a8679130b6f2dd6241f366b0ba7f0b0d24dbf0f914309579e4359a1bc8ad14"
   }
 ]

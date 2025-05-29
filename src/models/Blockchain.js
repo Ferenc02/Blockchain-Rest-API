@@ -11,7 +11,7 @@ export default class Blockchain {
       0,
       new Date().toISOString(),
       {
-        message: "Genesis Block",
+        data: "Genesis Block",
       },
       "0"
     );
