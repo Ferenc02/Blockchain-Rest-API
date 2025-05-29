@@ -2,12 +2,12 @@ import Block from "./Block.js";
 
 export default class Blockchain {
   constructor() {
-    this.chain = [this.createGenesisBlock()];
-    this.diffficulty = 4;
+    this.chain = [];
+    this.diffficulty = 2;
   }
 
   createGenesisBlock() {
-    return new Block(
+    const genesis = new Block(
       0,
       new Date().toISOString(),
       {
@@ -15,6 +15,8 @@ export default class Blockchain {
       },
       "0"
     );
+    genesis.mineBlock(this.diffficulty);
+    this.chain.push(genesis);
   }
 
   getLatestBlock() {
@@ -24,11 +26,23 @@ export default class Blockchain {
   addBlock(newBlock) {
     newBlock.previousHash = this.getLatestBlock().hash;
     newBlock.mineBlock(this.diffficulty);
-    this.chain.push(newBlock);
+
+    if (this.isValidNewBlock(newBlock, this.getLatestBlock())) {
+      this.chain.push(newBlock);
+    } else {
+      throw new Error("Invalid block, cannot be added to the chain.");
+    }
   }
 
   getBlock(index) {
     return this.chain[index];
+  }
+
+  isValidNewBlock(newBlock, previousBlock) {
+    return (
+      newBlock.previousHash === previousBlock.hash &&
+      newBlock.hash === newBlock.calculateHash()
+    );
   }
 
   isChainValid() {
@@ -45,5 +59,9 @@ export default class Blockchain {
       }
     }
     return true;
+  }
+
+  loadFromData(data) {
+    this.chain = data.map((block) => Object.assign(new Block(), block));
   }
 }

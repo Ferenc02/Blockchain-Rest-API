@@ -1,27 +1,29 @@
-import { BlockchainService } from "../services/blockchainService";
-import { logError } from "../services/logger";
+import * as service from "../services/blockchainService.js";
 
-let blockchainService;
-
-export async function initializeBlockchain(req, res) {
+export async function listBlocks(req, res, next) {
   try {
-    if (!blockchainService) {
-      blockchainService = new BlockchainService();
-    }
-    const blockchain = await blockchainService.loadBlockchain();
-    res.status(200).json(blockchain);
-  } catch (error) {
-    logError(error);
-    res.status(500).json({ error: "Failed to load blockchain" });
+    res.json(service.getAllBlocks());
+  } catch (err) {
+    next(err);
   }
 }
 
-export async function createBlock(req, res) {
+export async function getBlockByIndex(req, res, next) {
   try {
-    blockchainService = new BlockchainService();
-    const newBlock = await blockchainService.createBlock(req.body);
-    res.status(201).json(newBlock);
-  } catch (error) {
-    logError(error);
+    const block = service.getBlock(Number(req.params.index));
+    if (!block) return res.status(404).json({ error: "Block not found" });
+    res.json(block);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function createNewBlock(req, res, next) {
+  try {
+    console.log("Creating new block with data:", req.body);
+    const block = await service.createBlock(req.body);
+    res.status(201).json(block);
+  } catch (err) {
+    next(err);
   }
 }

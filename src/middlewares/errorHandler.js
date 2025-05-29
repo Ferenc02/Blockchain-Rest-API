@@ -1,6 +1,6 @@
 import { logError } from "../services/logger.js";
 
-export function errorHandler(err, req, res, next) {
+export default function errorHandler(err, req, res, next) {
   logError(err);
 
   res.status(500).json({

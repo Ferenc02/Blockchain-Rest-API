@@ -1,18 +1,39 @@
-import { loadBlockchain } from "../database/blockchainDB";
-import { logError } from "./logger";
+import Blockchain from "../models/Blockchain.js";
+import Block from "../models/Block.js";
+import { loadBlockchain, saveBlockchain } from "../database/blockchainDB.js";
+import { logError } from "./logger.js";
 
-export class BlockchainService {
-  constructor() {
-    this.blockchain = [];
-    this.loadBlockchain();
-  }
+let blockchain = null;
 
-  async loadBlockchain() {
-    try {
-      const data = await loadBlockchain();
-      this.blockchain = data.blocks || [];
-    } catch (error) {
-      logError(error);
-    }
+export async function initialize() {
+  const data = await loadBlockchain();
+  console.log("🚀 Initializing Blockchain... 🚀");
+
+  blockchain = new Blockchain();
+  if (data) {
+    blockchain.loadFromData(data);
+  } else {
+    console.log("No existing blockchain data found, creating genesis block.");
+    blockchain.createGenesisBlock();
+    await saveBlockchain(blockchain.chain);
   }
+}
+
+export function getAllBlocks() {
+  return blockchain.chain;
+}
+
+export function getBlock(index) {
+  return blockchain.chain[index];
+}
+
+export async function createBlock(data) {
+  const newBlock = Block.create(
+    blockchain.chain.length,
+    data,
+    blockchain.getLatestBlock().hash ? blockchain.getLatestBlock().hash : "0"
+  );
+  blockchain.addBlock(newBlock);
+  await saveBlockchain(blockchain.chain);
+  return newBlock;
 }

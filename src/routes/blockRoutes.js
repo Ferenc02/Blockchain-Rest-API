@@ -1,16 +1,14 @@
 import express from "express";
 import {
-  getBlocks,
-  getBlockById,
-  createBlock,
-  updateBlock,
-  deleteBlock,
-} from "../controllers/blockController.mjs";
+  listBlocks,
+  createNewBlock,
+  getBlockByIndex,
+} from "../controllers/blockController.js";
 
 const router = express.Router();
+router.get("/", listBlocks);
+router.post("/", createNewBlock);
 
-router.post("/", createBlock);
-router.get("/", getBlocks);
-router.get("/:id", getBlockById);
+router.get("/:index", getBlockByIndex);
 
 export default router;

@@ -17,6 +17,6 @@ export async function loadBlockchain() {
     return JSON.parse(data);
   } catch (error) {
     logError(error);
-    return { blocks: [] }; // Return an empty blockchain if loading fails
+    return null;
   }
 }
