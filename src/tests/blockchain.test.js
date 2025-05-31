@@ -26,7 +26,7 @@ describe("Block tests", () => {
 
   it("should mine a block with correct difficulty", () => {
     const block = Block.create(1, { data: "Test Block" }, "0");
-    expect(block.hash.substring(0, 4)).toBe("0000");
+    expect(block.hash.substring(0, 4)).toBe("0000"); // Same here as above
   });
 
   it("should be valid after mining", () => {
