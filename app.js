@@ -12,6 +12,13 @@ app.use(express.json());
 await initialize();
 
 app.use("/api/blocks", router);
+
+app.use((req, res, next) => {
+  const error = new Error("Not Found");
+  error.status = 404;
+  next(error);
+});
+
 app.use(errorHandler);
 
 app.listen(PORT, () => {

@@ -20,7 +20,7 @@ export function logError(error) {
   }
 
   // Create the log message with the timestamp and error stack
-  const logMessage = `${timestamp} - ERROR: ${error.stack}\n`;
+  const logMessage = `${timestamp} - ERROR Message: ${error.message}\n${timestamp} - ERROR Stack: ${error.stack}\n\n `;
 
   fs.appendFile(path.join(fullFolderPath, logFileName), logMessage, (err) => {
     if (err) {
@@ -29,5 +29,7 @@ export function logError(error) {
   });
 
   // Log so the user knows an error occurred
-  console.error("❗ An error occurred. Check the logs for details. ❗");
+  console.error(
+    `============\n❗ An error occurred. ❗\nERROR: ${error.message}\n❗Check the logs for more details. ❗\n============`
+  );
 }
