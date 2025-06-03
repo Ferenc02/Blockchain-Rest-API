@@ -24,7 +24,7 @@ src/
 ├── routes/              # Express route definitions
 ├── services/            # Logging and file IO
 ├── tests/               # Unit tests with vitest
-├── blockchain.json      # Persistent blockchain storage
+├── database/            # Persistent blockchain storage
 └── app.js               # Entry point
 ```
 
