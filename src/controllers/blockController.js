@@ -4,7 +4,10 @@ export async function listBlocks(req, res, next) {
   try {
     res.json(service.getAllBlocks());
   } catch (err) {
-    next(err);
+    next({
+      status: 500,
+      message: `Failed to retrieve blocks: ${err.message}`,
+    });
   }
 }
 
@@ -22,7 +25,10 @@ export async function getBlockByIndex(req, res, next) {
 
     res.json(block);
   } catch (err) {
-    next(err);
+    next({
+      status: 500,
+      message: `Failed to retrieve block: ${err.message}`,
+    });
   }
 }
 
